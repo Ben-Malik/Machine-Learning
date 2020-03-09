@@ -1,0 +1,8 @@
+Given the student-mat.csv file in the attachment, please make a prediction about whether the student will pass or not in the final exam and prepare a contingency table to summarize the classification performance.
+
+It is necessary and sufficient to get at least 10 points from the G3 grade to pass.
+Your prediction should rely on posterior probability calculation using the Bayes Theorem.
+You're expected to use at least two categorical features in the dataset to decide on the class.
+You can use 80% of the data as training and compute posterior probabilities on that part, then 20% can be used to test the prediction performance.
+You're provided a code sample that reads features from an input file, makes a simple prediction, and constructs a contingency table for summarizing the prediction performance.
+
