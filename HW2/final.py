@@ -1,5 +1,5 @@
 from nltk import pos_tag,word_tokenize
-article = open("article.txt", "r") 
+article = open("love.txt", "r") 
 abstract_file = open("100-400.txt", "r")
 concrete_file = open("400-700.txt", "r")
 
