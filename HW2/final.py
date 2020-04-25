@@ -2,6 +2,17 @@ from nltk import pos_tag,word_tokenize
 article = open("love.txt", "r") 
 abstract_file = open("100-400.txt", "r")
 concrete_file = open("400-700.txt", "r")
+subsective_file = open("subjectives.tff", "r")
+
+def getWordSubjectiveness(word): 
+    output = "None"
+    for line in subsective_file.readlines():
+        current = line.split()
+        currentWord = current[2].split("=")[1]
+        if (word.lower() == currentWord):
+            output = current[0].split("=")[1]
+            break
+    return output
 
 class Word:
     def __init__(self, w, w_pos, before_1_pos, before_2_pos, after_1_pos, after_2_pos):
@@ -13,7 +24,22 @@ class Word:
         self.after_2_pos = after_2_pos
     
     def toString(self): 
-        return self.before_1_pos + " " + self.before_2_pos + " " + self.w + " " + self.w_pos + ' ' + self.after_1_pos + " " + self.after_2_pos
+        return self.before_1_pos + " <-- " + self.before_2_pos + " <- " + self.w + " - " + self.w_pos + ' -> ' + self.after_1_pos + " --> " + self.after_2_pos
+
+class Sentence:
+    def __init__(self, words):
+        self.sentence = list()
+        for word in words:
+            self.sentence.append(word)
+    def __init__(self):
+        self.sentence = list()
+
+    def addWord(self, word):
+        self.sentence.append(word)
+
+    def toString(self): 
+        for word in self.sentence:
+            print(word.toString())
 sentences = list()
 abstract_words = list()
 concrete_words = list()
@@ -29,7 +55,7 @@ for line in article.readlines():
 allSentences = list()
 #Pos for each word
 for i in range(len(sentences)):
-    output = list()
+    sentence = Sentence()
     for j in range(len(sentences[i])):
         before_1 = "No Before 1"
         before_2 = "No Before 2"
@@ -94,10 +120,8 @@ for i in range(len(sentences)):
                 after_1 = pos_tag(word_tokenize(sentences[i][j+1]))[0][1]
                 after_2 = pos_tag(word_tokenize(sentences[i][j+2]))[0][1]
         myWord = Word(sentences[i][j], word, before_1, before_2, after_1, after_2)
-        output.append(myWord)
-        allSentences.append(output)
+        sentence.addWord(myWord)
+    allSentences.append(sentence)
        
         
-for sentence in allSentences:
-    for word in sentence:
-        print(word.toString())
+print(getWordSubjectiveness('Hello'))
