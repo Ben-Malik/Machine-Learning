@@ -3,6 +3,17 @@ article = open("love.txt", "r")
 abstract_file = open("100-400.txt", "r")
 concrete_file = open("400-700.txt", "r")
 
+class Word:
+    def __init__(self, w, w_pos, before_1_pos, before_2_pos, after_1_pos, after_2_pos):
+        self.w = w
+        self.w_pos = w_pos
+        self.before_1_pos = before_1_pos
+        self.before_2_pos = before_2_pos
+        self.after_1_pos = after_1_pos
+        self.after_2_pos = after_2_pos
+    
+    def toString(self): 
+        return self.before_1_pos + " " + self.before_2_pos + " " + self.w + " " + self.w_pos + ' ' + self.after_1_pos + " " + self.after_2_pos
 sentences = list()
 abstract_words = list()
 concrete_words = list()
@@ -15,14 +26,15 @@ for line in article.readlines():
         output.append(word)
     sentences.append(output)
 
-
+allSentences = list()
 #Pos for each word
 for i in range(len(sentences)):
+    output = list()
     for j in range(len(sentences[i])):
-        before_1 = None
-        before_2 = None
-        after_1 = None
-        after_2 = None
+        before_1 = "No Before 1"
+        before_2 = "No Before 2"
+        after_1 = "No After 1"
+        after_2 = "No After 2"
         output = list()
         word = pos_tag(word_tokenize(sentences[i][j]))[0][1]
         if (i == 0):
@@ -81,22 +93,11 @@ for i in range(len(sentences)):
                 before_2 = pos_tag(word_tokenize(sentences[i][j-2]))[0][1]
                 after_1 = pos_tag(word_tokenize(sentences[i][j+1]))[0][1]
                 after_2 = pos_tag(word_tokenize(sentences[i][j+2]))[0][1]
-        output.append(before_2)
-        output.append(before_1)
-        output.append(sentences[i][j])
-        output.append(word)
-        output.append(after_1)
-        output.append(after_2)
-        #elif (i == 0 and len(sentences[j])-2 - j != 0):
-        # if len(sentences) - i - 1 == 0:
-        #     if len(sentences[i][j]) - j - 1 == 0:
-        #         after_1 = pos_tag(word_tokenize(sentences[i][j+1]))
-        #         after_2 = pos_tag(word_tokenize(sentences[i+1][0]))
-        #     else:
-        #         after_1 = pos_tag(word_tokenize(sentences[i][j+1]))
-        #         after_2 = pos_tag(word_tokenize(sentences[i][j+2]))
-        # if len(sentences[i][j]) - j - 2 == 0:
-        #     print("Hello")
-
-        print(output)
-
+        myWord = Word(sentences[i][j], word, before_1, before_2, after_1, after_2)
+        output.append(myWord)
+        allSentences.append(output)
+       
+        
+for sentence in allSentences:
+    for word in sentence:
+        print(word.toString())
