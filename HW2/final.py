@@ -73,6 +73,7 @@ class Word:
 class Sentence:
     def __init__(self, words):
         self.sentence = list()
+        
         for word in words:
             self.sentence.append(word)
     def __init__(self):
@@ -84,6 +85,8 @@ class Sentence:
     def toString(self): 
         for word in self.sentence:
             print(word.toString())
+
+allSentences = list()
 sentences = list()
 abstract_words = list()
 concrete_words = list()
@@ -96,7 +99,7 @@ for line in article.readlines():
         output.append(word)
     sentences.append(output)
 
-allSentences = list()
+
 #Pos for each word
 for i in range(len(sentences)):
     sentence = Sentence()
