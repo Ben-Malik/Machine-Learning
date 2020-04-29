@@ -95,7 +95,7 @@ class Word:
         return self.is_weak, self.is_strong
 
     def equals(self, word):
-        return word.is_strong == self.is_strong and word.is_weak == self.is_weak and word.is_positive == self.is_positive and word.is_negative == self.is_negative and word.is_before_1_positive == self.is_before_1_positive and word.is_before_1_negative == self.is_before_1_negative and word.is_before_2_positive == self.is_before_2_positive and word.is_before_2_negative == self.is_before_2_negative and word.is_after_1_positive == self.is_after_1_positive and word.is_after_1_negative == self.is_after_1_negative and word.is_after_2_positive == self.is_after_2_positive and word.is_after_2_negative == self.is_after_2_negative and word.w_pos == self.w_pos and word.before_1_pos == self.before_1_pos and word.before_2_pos == self.before_2_pos and word.after_1_pos == self.after_1_pos and word.after_2_post == self.after_2_pos
+        return word.is_strong == self.is_strong and word.is_weak == self.is_weak and word.is_positive == self.is_positive and word.is_negative == self.is_negative and word.is_before_1_positive == self.is_before_1_positive and word.is_before_1_negative == self.is_before_1_negative and word.is_before_2_positive == self.is_before_2_positive and word.is_before_2_negative == self.is_before_2_negative and word.is_after_1_positive == self.is_after_1_positive and word.is_after_1_negative == self.is_after_1_negative and word.is_after_2_positive == self.is_after_2_positive and word.is_after_2_negative == self.is_after_2_negative and word.w_pos == self.w_pos and word.before_1_pos == self.before_1_pos and word.before_2_pos == self.before_2_pos and word.after_1_pos == self.after_1_pos and word.after_2_pos == self.after_2_pos
 
 class Group: 
     def __init__(self, words):
@@ -109,7 +109,7 @@ class Group:
     def __init__(self):
         self.group = list()
     
-    def addGroup(self, word):
+    def addWord(self, word):
         self.group.append(word)
 
 class Sentence:
@@ -136,6 +136,7 @@ allSentences = list()
 sentences = list()
 abstract_words = list()
 concrete_words = list()
+entire_article = list()
 
 for line in article.readlines():
     current = line.strip().split(' ')
@@ -145,7 +146,7 @@ for line in article.readlines():
         output.append(word)
     sentences.append(output)
 
-def parseSentences():
+def parseToSentences():
     #Pos for each word
     for i in range(len(sentences)):
         sentence = Sentence()
@@ -295,6 +296,28 @@ def parseSentences():
             # print(myWord.positivenessStringify())
             # print(myWord.subjectivenessStringify())
             sentence.addWord(myWord)
+            entire_article.append(myWord)
         allSentences.append(sentence)
         
-print(isWordConcrete('ABODE'))
+def groupifyAll():
+    tempSentences = allSentences.copy()
+    
+def groupifyTest():
+
+    tempSentences = allSentences.copy()
+    for sentence in tempSentences:
+        tempSentence = sentence.sentence.copy()
+        while tempSentence:
+            currentGroup = Group()
+            currentWord = tempSentence[len(tempSentence)-1]
+            for i in range(len(tempSentence)-1, -1, -1):
+                if (tempSentence[i].equals(currentWord)):
+                    currentGroup.addWord(tempSentence[i])
+                    del tempSentence[i]
+            sentence.addGroup(currentGroup)
+    return tempSentences
+    
+parseToSentences()
+for word in entire_article:
+    print(word.toString())
+# groupifyTest()
