@@ -132,7 +132,11 @@ class Group:
     
     def getAbstractnessProb(self):
         return self.groupAbstactness
-        
+    
+    def toString(self):
+        for word in self.group:
+            print(word.toString())
+
 class Sentence:
     def __init__(self, words):
         self.sentence = list()
@@ -201,26 +205,28 @@ def parseToSentences():
                     word_after_2 = sentences[i][j+1]
                     word_before_1 = sentences[i][0]
                 elif (j == len(sentences[i])-1):
-                    
-                    after_1 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
-                    after_2 = pos_tag(word_tokenize(sentences[i+1][1]))[0][1]
+                    if (i != len(sentences)-1):
+                        after_1 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
+                        after_2 = pos_tag(word_tokenize(sentences[i+1][1]))[0][1]
                     before_1 = pos_tag(word_tokenize(sentences[i][j-1]))[0][1]
                     before_2 = pos_tag(word_tokenize(sentences[i][j-2]))[0][1]
 
-                    
-                    word_after_1 = sentences[i+1][0]
-                    word_after_2 = sentences[i+1][1]
+                    if (i != len(sentences)-1):
+                        word_after_1 = sentences[i+1][0]
+                        word_after_2 = sentences[i+1][1]
                     word_before_1 = sentences[i][j-1]
                     word_before_2 = sentences[i][j-2]
                 elif (j == len(sentences[i])-2):
                     after_1 = pos_tag(word_tokenize(sentences[i][j+1]))[0][1]
-                    after_2 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
+                    if (i != len(sentences)-1):
+                        after_2 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
 
                     before_1 = pos_tag(word_tokenize(sentences[i][j-1]))[0][1]
                     before_2 = pos_tag(word_tokenize(sentences[i][j-2]))[0][1]
 
                     word_after_1 = sentences[i][j+1]
-                    word_after_2 = sentences[i+1][0]
+                    if (i != len(sentences)-1):
+                        word_after_2 = sentences[i+1][0]
                     word_before_1 = sentences[i][j-1]
                     word_before_2 = sentences[i][j-2]
                 else: 
@@ -354,5 +360,7 @@ def groupifyBySentence():
 
 readArticle()
 parseToSentences()
-for word in entire_article:
-    print(word.toString())
+allGroups = groupifyAll()
+for group in allGroups:
+    print(group.computeProbs())
+    group.toString()
