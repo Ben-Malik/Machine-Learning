@@ -85,6 +85,10 @@ class Word:
         self.is_concrete = isWordConcrete(w)
         
     
+    def isConcrete(self):
+        return self.is_concrete
+
+
     def toString(self): 
         return self.before_1_pos + " <-- " + self.before_2_pos + " <- " + self.w + " - " + self.w_pos + ' -> ' + self.after_1_pos + " --> " + self.after_2_pos
 
@@ -98,6 +102,7 @@ class Word:
         return word.is_strong == self.is_strong and word.is_weak == self.is_weak and word.is_positive == self.is_positive and word.is_negative == self.is_negative and word.is_before_1_positive == self.is_before_1_positive and word.is_before_1_negative == self.is_before_1_negative and word.is_before_2_positive == self.is_before_2_positive and word.is_before_2_negative == self.is_before_2_negative and word.is_after_1_positive == self.is_after_1_positive and word.is_after_1_negative == self.is_after_1_negative and word.is_after_2_positive == self.is_after_2_positive and word.is_after_2_negative == self.is_after_2_negative and word.w_pos == self.w_pos and word.before_1_pos == self.before_1_pos and word.before_2_pos == self.before_2_pos and word.after_1_pos == self.after_1_pos and word.after_2_pos == self.after_2_pos
 
 class Group: 
+
     def __init__(self, words):
         self.group = list()
         self.groupAbstactness = 0.0
@@ -111,7 +116,23 @@ class Group:
     
     def addWord(self, word):
         self.group.append(word)
+    
+    def computeProbs(self):
+        total = len(self.group)
+        concrete = 0
+        for word in self.group:
+            if (word.isConcrete()):
+                concrete+=1
+        self.groupConcreteness = concrete/total
+        self.groupAbstactness = (total-concrete)/total
+        return (self.groupConcreteness, self.groupAbstactness)
 
+    def getConcretenessProb(self):
+        return self.groupConcreteness
+    
+    def getAbstractnessProb(self):
+        return self.groupAbstactness
+        
 class Sentence:
     def __init__(self, words):
         self.sentence = list()
@@ -138,13 +159,14 @@ abstract_words = list()
 concrete_words = list()
 entire_article = list()
 
-for line in article.readlines():
-    current = line.strip().split(' ')
-    output = list()
-    for word in current:
-        word = word.strip(',.()\'\"').upper()
-        output.append(word)
-    sentences.append(output)
+def readArticle():
+    for line in article.readlines():
+        current = line.strip().split(' ')
+        output = list()
+        for word in current:
+            word = word.strip(',.()\'\"').upper()
+            output.append(word)
+        sentences.append(output)
 
 def parseToSentences():
     #Pos for each word
@@ -300,9 +322,22 @@ def parseToSentences():
         allSentences.append(sentence)
         
 def groupifyAll():
-    tempSentences = allSentences.copy()
+    tempWords = entire_article.copy()
+    allGroups = list()
+    while tempWords:
+        currentGroup = Group()
+        currentWord = tempWords[len(tempWords)-1]
+        for i in range(len(tempWords)-1, -1, -1):
+            if (tempWords[i].equals(currentWord)):
+                currentGroup.addWord(tempWords[i])
+                del tempWords[i]
+        currentGroup.computeProbs()
+        allGroups.append(currentGroup)
+    return allGroups
+
+
     
-def groupifyTest():
+def groupifyBySentence():
 
     tempSentences = allSentences.copy()
     for sentence in tempSentences:
@@ -316,8 +351,8 @@ def groupifyTest():
                     del tempSentence[i]
             sentence.addGroup(currentGroup)
     return tempSentences
-    
+
+readArticle()
 parseToSentences()
 for word in entire_article:
     print(word.toString())
-# groupifyTest()
