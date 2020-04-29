@@ -132,28 +132,26 @@ for i in range(len(sentences)):
                 word_after_2 = sentences[i][j+1]
                 word_before_1 = sentences[i][0]
             elif (j == len(sentences[i])-1):
-                if (i != len(sentences)-1):
-                    after_1 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
-                    after_2 = pos_tag(word_tokenize(sentences[i+1][1]))[0][1]
+                
+                after_1 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
+                after_2 = pos_tag(word_tokenize(sentences[i+1][1]))[0][1]
                 before_1 = pos_tag(word_tokenize(sentences[i][j-1]))[0][1]
                 before_2 = pos_tag(word_tokenize(sentences[i][j-2]))[0][1]
 
-                if (i != len(sentences)-1):
-                    word_after_1 = sentences[i+1][0]
-                    word_after_2 = sentences[i+1][1]
+                
+                word_after_1 = sentences[i+1][0]
+                word_after_2 = sentences[i+1][1]
                 word_before_1 = sentences[i][j-1]
                 word_before_2 = sentences[i][j-2]
             elif (j == len(sentences[i])-2):
                 after_1 = pos_tag(word_tokenize(sentences[i][j+1]))[0][1]
-                if (i != len(sentences)-1):
-                    after_2 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
+                after_2 = pos_tag(word_tokenize(sentences[i+1][0]))[0][1]
 
                 before_1 = pos_tag(word_tokenize(sentences[i][j-1]))[0][1]
                 before_2 = pos_tag(word_tokenize(sentences[i][j-2]))[0][1]
 
                 word_after_1 = sentences[i][j+1]
-                if (i != len(sentences)-1):
-                    word_after_2 = sentences[i+1][0]
+                word_after_2 = sentences[i+1][0]
                 word_before_1 = sentences[i][j-1]
                 word_before_2 = sentences[i][j-2]
             else: 
@@ -232,20 +230,20 @@ for i in range(len(sentences)):
                 after_word_1 = sentences[i][j+1]
                 after_word_2 = sentences[i][j+2]
 
-        is_positive = checkForPositivenessNegativeness(sentences[i][j])[1]
-        is_negative = checkForPositivenessNegativeness(sentences[i][j])[0]  
+        is_positive = checkForPositivenessNegativeness(sentences[i][j])[0]
+        is_negative = checkForPositivenessNegativeness(sentences[i][j])[1]  
 
-        is_word_before_1_positive = checkForPositivenessNegativeness(word_before_1)[1]
-        is_word_before_1_negative = checkForPositivenessNegativeness(word_before_1)[0]
+        is_word_before_1_positive = checkForPositivenessNegativeness(word_before_1)[0]
+        is_word_before_1_negative = checkForPositivenessNegativeness(word_before_1)[1]
 
-        is_word_before_2_positive = checkForPositivenessNegativeness(word_before_2)[1]
-        is_word_before_2_negative = checkForPositivenessNegativeness(word_before_2)[0]
+        is_word_before_2_positive = checkForPositivenessNegativeness(word_before_2)[0]
+        is_word_before_2_negative = checkForPositivenessNegativeness(word_before_2)[1]
 
-        is_word_after_1_positive = checkForPositivenessNegativeness(word_after_1)[1]
-        is_word_after_1_negative = checkForPositivenessNegativeness(word_after_1)[0]
+        is_word_after_1_positive = checkForPositivenessNegativeness(word_after_1)[0]
+        is_word_after_1_negative = checkForPositivenessNegativeness(word_after_1)[1]
 
-        is_word_after_2_positive = checkForPositivenessNegativeness(word_after_2)[1]
-        is_word_after_2_negative = checkForPositivenessNegativeness(word_after_2)[0] 
+        is_word_after_2_positive = checkForPositivenessNegativeness(word_after_2)[0]
+        is_word_after_2_negative = checkForPositivenessNegativeness(word_after_2)[1] 
  
         myWord = Word(sentences[i][j], word, before_1, before_2, after_1, after_2, is_positive, is_negative, is_word_before_1_positive, is_word_before_1_negative, is_word_before_2_positive, is_word_before_2_negative, is_word_after_1_positive, is_word_after_1_negative, is_word_after_2_positive, is_word_after_2_negative, is_weak, is_strong)
         print(myWord.positivenessStringify())
