@@ -1,6 +1,6 @@
 from nltk import pos_tag,word_tokenize
 article = open("love.txt", "r") 
-
+article_test = open("lovetest.txt", "r")
 
 def isWordConcrete(word): 
     abstract_file = open("100-400.txt", "r")
@@ -163,6 +163,9 @@ abstract_words = list()
 concrete_words = list()
 entire_article = list()
 
+allSentencesText = list()
+sentencesTest = list()
+
 def readArticle():
     for line in article.readlines():
         current = line.strip().split(' ')
@@ -172,7 +175,7 @@ def readArticle():
             output.append(word)
         sentences.append(output)
 
-def parseToSentences():
+def parseToSentences(sentences, allSentences, entire_article):
     #Pos for each word
     for i in range(len(sentences)):
         sentence = Sentence()
@@ -325,6 +328,7 @@ def parseToSentences():
             # print(myWord.subjectivenessStringify())
             sentence.addWord(myWord)
             entire_article.append(myWord)
+        sentence.sentence.reverse()
         allSentences.append(sentence)
         
 def groupifyAll():
@@ -359,7 +363,7 @@ def groupifyBySentence():
     return tempSentences
 
 readArticle()
-parseToSentences()
+parseToSentences(sentences, allSentences, entire_article)
 allGroups = groupifyAll()
 for group in allGroups:
     print(group.computeProbs())
