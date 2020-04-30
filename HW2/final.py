@@ -88,7 +88,6 @@ class Word:
     def isConcrete(self):
         return self.is_concrete
 
-
     def toString(self): 
         return self.before_1_pos + " <-- " + self.before_2_pos + " <- " + self.w + " - " + self.w_pos + ' -> ' + self.after_1_pos + " --> " + self.after_2_pos
 
@@ -101,6 +100,12 @@ class Word:
     def equals(self, word):
         return word.is_strong == self.is_strong and word.is_weak == self.is_weak and word.is_positive == self.is_positive and word.is_negative == self.is_negative and word.is_before_1_positive == self.is_before_1_positive and word.is_before_1_negative == self.is_before_1_negative and word.is_before_2_positive == self.is_before_2_positive and word.is_before_2_negative == self.is_before_2_negative and word.is_after_1_positive == self.is_after_1_positive and word.is_after_1_negative == self.is_after_1_negative and word.is_after_2_positive == self.is_after_2_positive and word.is_after_2_negative == self.is_after_2_negative and word.w_pos == self.w_pos and word.before_1_pos == self.before_1_pos and word.before_2_pos == self.before_2_pos and word.after_1_pos == self.after_1_pos and word.after_2_pos == self.after_2_pos
 
+    def predictConcreteness(self, trainedData):
+        for group in trainedData:
+            if (self.equals(group.group[0])):
+                return group[0].getConcretenessProb() > 0.5
+        return False
+
 class Group: 
 
     def __init__(self, words):
@@ -110,9 +115,12 @@ class Group:
 
         for word in words:
             self.group.append(word)
-    
+        self.computeProbs()
+
     def __init__(self):
         self.group = list()
+        self.groupAbstactness = 0.0
+        self.groupConcreteness = 0.0
     
     def addWord(self, word):
         self.group.append(word)
@@ -143,6 +151,7 @@ class Sentence:
         self.groups = list()
         for word in words:
             self.sentence.append(word)
+
     def __init__(self):
         self.sentence = list()
         self.groups = list()
@@ -157,13 +166,33 @@ class Sentence:
         for word in self.sentence:
             print(word.toString())
 
+    def toGroups(self):
+        for word in self.groups:
+            print(word.computeProbs())
+    
+    def computeSentenceAbstractness(self):
+        concrete = 0.0
+        for group in self.groups:
+            concrete+= group.computeProbs()[0]
+        concrete /= len(self.groups)
+        return 1 - concrete
+
+    def isPredictionAcurate(self, trainedData):
+        accurate = True
+        for word in self.sentence:
+            if ((word.is_concrete and not word.predictConcreteness(trainedData)) or (word.predictConcreteness(trainedData) and not word.is_concrete)):
+                accurate = False
+                break
+        return accurate
+
 allSentences = list()
 sentences = list()
-abstract_words = list()
-concrete_words = list()
 entire_article = list()
 
-allSentencesText = list()
+abstract_words = list()
+concrete_words = list()
+
+allSentencesTest = list()
 sentencesTest = list()
 
 def readArticle():
@@ -174,6 +203,15 @@ def readArticle():
             word = word.strip(',.()\'\"').upper()
             output.append(word)
         sentences.append(output)
+
+def readTestData():
+    for line in article_test.readlines():
+        current = line.strip().split(' ')
+        output = list()
+        for word in current:
+            word = word.strip(',.()\'\"').upper()
+            output.append(word)
+        sentencesTest.append(output)
 
 def parseToSentences(sentences, allSentences, entire_article):
     #Pos for each word
@@ -344,12 +382,10 @@ def groupifyAll():
         currentGroup.computeProbs()
         allGroups.append(currentGroup)
     return allGroups
-
-
-    
+   
 def groupifyBySentence():
 
-    tempSentences = allSentences.copy()
+    tempSentences = allSentencesTest.copy()
     for sentence in tempSentences:
         tempSentence = sentence.sentence.copy()
         while tempSentence:
@@ -360,11 +396,25 @@ def groupifyBySentence():
                     currentGroup.addWord(tempSentence[i])
                     del tempSentence[i]
             sentence.addGroup(currentGroup)
+        sentence.groups.reverse()
+        sentence.sentence.reverse()
     return tempSentences
+
+def checkForAccurracy(sentences, trainedData):
+    accurate_count = 0
+    for sentence in sentences:
+        if (sentence.isPredictionAcurate(trainedData)):
+            accurate_count+=1
+    return accurate_count/len(sentences)
 
 readArticle()
 parseToSentences(sentences, allSentences, entire_article)
+print("Finshed sentences...")
 allGroups = groupifyAll()
-for group in allGroups:
-    print(group.computeProbs())
-    group.toString()
+
+readTestData()
+parseToSentences(sentencesTest, allSentencesTest, list())
+print("Finshed tests...")
+sentencesAsGroups = groupifyBySentence()
+
+print("Accurracy: ", checkForAccurracy(allSentencesTest, allGroups))
