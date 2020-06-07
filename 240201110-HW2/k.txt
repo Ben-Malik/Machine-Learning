@@ -1,0 +1,35 @@
+Coronaviruses are a group of related viruses that cause diseases in mammals and birds.
+In humans, coronaviruses cause respiratory tract infections that can range from mild to lethal.
+Mild illnesses include some cases of the common cold (which has other possible causes, predominantly rhinoviruses), while more lethal varieties can cause SARS, MERS, and COVID-19.
+Symptoms in other species vary: in chickens, they cause an upper respiratory tract disease, while in cows and pigs they cause diarrhea.
+There are yet to be vaccines or antiviral drugs to prevent or treat human coronavirus infections.
+Coronaviruses constitute the subfamily Orthocoronavirinae, in the family Coronaviridae, order Nidovirales, and realm Riboviria.
+They are enveloped viruses with a positive-sense single-stranded RNA genome and a nucleocapsid of helical symmetry.
+The genome size of coronaviruses ranges from approximately 26 to 32 kilobases, one of the largest among RNA viruses.
+They have characteristic club-shaped spikes that project from their surface, which in electron micrographs create an image reminiscent of the solar corona from which their name derives.
+Coronaviruses were first discovered in the 1930s when an acute respiratory infection of domesticated chickens was shown to be caused by infectious bronchitis virus (IBV).
+Arthur Schalk and M.C. Hawn described in 1931 a new respiratory infection of chickens in North Dakota.
+The infection of new-born chicks was characterized by gasping and listlessness.
+Fred Beaudette and Charles Hudson six years later successfully isolated and cultivated the infectious bronchitis virus which caused the disease.
+In the 1940s, two more animal coronaviruses, mouse hepatitis virus (MHV) and transmissible gastroenteritis virus (TGEV), were isolated.
+It was not realized at the time that these three different viruses were related.
+Human coronaviruses were discovered in the 1960s.
+They were isolated using two different methods in the United Kingdom and the United States.
+E.C. Kendall, David Tyrrell and Malcom Byone working at the Common Cold Unit of the British Medical Research Council in 1960 isolated from a boy a novel common cold virus B814.
+The virus was not able to be cultivated using standards techniques which had successfully cultivated rhinoviruses, adenoviruses and other known common cold viruses.
+In 1965, Tyrrell and Byone successfully cultivated the novel virus by serial passaging it through organ culture of human embryonic trachea.
+The isolated virus when intranasally inoculated into volunteers caused a cold and was inactivated by ether which indicated it had a lipid envelope.
+Around the same time, Dorothy Hamre and John Procknow at the University of Chicago isolated a novel cold virus 229E from medical students, which they grew in kidney tissue culture.
+The novel virus 229E, like the virus strain B814, when inoculated into volunteers caused a cold and was inactivated by ether.
+The two novel strains B814 and 229E were subsequently imaged by electron microscopy in 1967 by Scottish virologist June Almeida at St. Thomas Hospital in London.
+Almeida through electron microscopy was able to show that B814 and 229E were morphologically related by their distinctive club-like spikes.
+Not only were they related with each other, but they were morphologically related to infectious bronchitis virus (IBV).
+A research group at the National Institute of Health the same year was able to isolate another member of this new group of viruses using organ culture and named the virus strain OC43 (OC for organ culture).
+Like B814, 229E, and IBV, the novel cold virus OC43 had distinctive club-like spikes when observed with the electron microscope.
+The IBV-like novel cold viruses were soon shown to be also morphologically related to the mouse hepatitis virus.
+This new group of IBV-like viruses came to be known as coronaviruses after their distinctive morphological appearance.
+Human coronavirus 229E and human coronavirus OC43 continued to be studied in subsequent decades.
+The coronavirus strain B814 was lost. It is not known which present human coronavirus it was.
+Other human coronaviruses have since been identified, including SARS-CoV in 2003, HCoV NL63 in 2004, HKU1 in 2005, MERS-CoV in 2012, and SARS-CoV-2 in 2019.
+There have also been a large number of animal coronaviruses identified since the 1960s.
+Type a message
