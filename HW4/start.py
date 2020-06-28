@@ -11,7 +11,7 @@ def tokenize_url(url: str):
 
 
 # read dataset
-df = pd.read_json("../data/news_category_dataset.json", lines=True)
+df = pd.read_json("dataset.json", lines=True)
 
 # create tokenized URL field
 df['tokenized_url'] = df['link'].apply(lambda x: tokenize_url(x))
