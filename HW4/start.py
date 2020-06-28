@@ -59,13 +59,25 @@ def extract_features(read_file, field, training_data, testing_data, type="binary
         return train_feature_set, test_feature_set, tfiread_file_vectorizer
 
 
+def get_top_k_predictions(model,X_test,k):
+    
+    probs = model.predict_proba(X_test)
+
+    best_n = np.argsort(probs, axis=1)[:,-k:]
+        
+    preds=[[model.classes_[predicted_cat] for predicted_cat in prediction] for prediction in best_n]
+        
+    preds=[ item[::-1] for item in preds]
+    return preds
+
+
 training_data, testing_data = train_test_split(read_file, random_state=2000)
 
 Y_train = training_data['category'].values
 Y_test = testing_data['category'].values
 
 X_train, X_test, feature_transformer = extract_features(
-    read_file, field, training_data, testing_data, type=feature_rep)
+    read_file, field, training_data, testing_data, type)
 
 
 print("Training a Logistic Regression Model...")
@@ -80,13 +92,3 @@ print("Starting evaluation...")
 accuracy=compute_accuracy(eval_items)
 mrr_at_k=compute_mrr_at_k(eval_items)
 
-def get_top_k_predictions(model,X_test,k):
-    
-    probs = model.predict_proba(X_test)
-
-    best_n = np.argsort(probs, axis=1)[:,-k:]
-        
-    preds=[[model.classes_[predicted_cat] for predicted_cat in prediction] for prediction in best_n]
-        
-    preds=[ item[::-1] for item in preds]
-    return preds
